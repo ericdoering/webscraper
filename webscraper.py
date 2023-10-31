@@ -9,7 +9,7 @@ tag = doc.title
 all_list_tags = doc.find_all("li")
 tag.string = "Beautiful Soup Title Change"
 
-# Testing With URL's 
+# Testing with URL's 
 
 url = "https://www.guitarcenter.com/Ibanez/TOD10N-Tim-Henson-Signature-Nylon-Acoustic-Electric-Guitar-Black-Flat-1500000386789.gc?icid=421588"
 guitar_page = requests.get(url)
@@ -18,4 +18,38 @@ guitar_page_formatted = BeautifulSoup(guitar_page.text, "html.parser")
 
 prices = guitar_page_formatted.find_all(text=re.compile(r'\$'))
 
-print(prices)
+# Additional searching functionality 
+
+with open("index_two.html", "r") as f:
+    doc_two = BeautifulSoup(f, "html.parser")
+
+first_li_tag = doc_two.find("li")
+first_li_tag["href"] = "#value has been changed#"
+first_li_tag["style"] = "font-style: bold;"
+
+all_p_tags = doc_two.find_all(["p"])
+all_title_tags = doc_two.find_all(["h1", "h2", "h3"])
+
+find_specific_li = doc_two.find_all(["li"], text="Contact Us")
+
+# When searching for a class "class" is a reserved python key word so "class_" must be used
+
+projects = doc_two.find_all(class_="project")
+
+data_after_dollar_sign = doc_two.find_all(text=re.compile("\$.*"))
+
+# limit number of results
+
+first_three_lis = doc_two.find_all(["li"], limit=3)
+
+# changing html document and saving 
+
+tags = doc.find_all(["li"])
+
+for tag in tags:
+    tag = "THIS HAS BEEN CHANGED"
+
+with open("changed.html", "w") as file:
+    file.write(str(doc))
+
+print(first_three_lis)
