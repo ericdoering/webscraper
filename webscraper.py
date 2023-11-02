@@ -52,4 +52,19 @@ for tag in tags:
 with open("changed.html", "w") as file:
     file.write(str(doc))
 
-print(first_three_lis)
+# navigating through html tree structure
+
+coin_url = "https://coinmarketcap.com/"
+
+coin_results = requests.get(coin_url).text
+
+coin_doc = BeautifulSoup(coin_results, "html.parser")
+
+tbody = coin_doc.tbody
+table_rows = tbody.contents
+
+prices = {}
+
+for rows in table_rows[:10]:
+    name, price = rows.contents[2:4]
+    print(name.p.string)
