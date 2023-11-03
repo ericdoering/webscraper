@@ -67,4 +67,9 @@ prices = {}
 
 for rows in table_rows[:10]:
     name, price = rows.contents[2:4]
-    print(name.p.string)
+    fixed_coin_names = name.p.string
+    coin_prices = price.a.string
+
+    prices[fixed_coin_names] = coin_prices
+
+    print(prices)
