@@ -7,7 +7,7 @@ product = input("What product do you want to search for? ")
 prices = {
     "New Egg": "",
     "Item Emporium": "",
-    "Amazon": ""
+    "Game Zone Products": ""
 }
 
 # New Egg
@@ -35,11 +35,11 @@ with open("item_emporium.html", "r") as f:
     doc = BeautifulSoup(f, "html.parser")
     
 
-product_name_tag = doc.find('h2', text='NVIDIA GeForce RTX 3080 Graphics Card')
+product_name_tag = doc.find("h2", text="NVIDIA GeForce RTX 3080 Graphics Card")
 
 if product_name_tag:
 
-    price_tag = product_name_tag.find_next('p', class_='price')
+    price_tag = product_name_tag.find_next("p", class_="price")
 
     if price_tag:
         price = price_tag.text
@@ -47,4 +47,23 @@ if product_name_tag:
 else:
     print("Product name tag not found in the HTML.")
 
-print(prices)
+
+# Game Zone Products (Fake E-Commerce Site)
+
+with open("game_zone_products.html", "r") as f:
+    doc = BeautifulSoup(f, "html.parser")
+
+
+    product_name_tag = doc.find("h1", text="NVIDIA GeForce RTX 3080 Graphics Card")
+
+    if product_name_tag:
+
+        price_tag = product_name_tag.find_next("div", class_="price")
+
+        if price_tag:
+            price = price_tag.text
+            prices["Game Zone Products"] = price
+
+final_prices = {key: value.replace('\n', '') for key, value in prices.items()}
+
+print(final_prices)
