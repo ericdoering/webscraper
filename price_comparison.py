@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+import xml.etree.ElementTree as ET
+import webbrowser
 
 product = input("What product do you want to search for? ")
 
@@ -66,4 +68,24 @@ with open("game_zone_products.html", "r") as f:
 
 final_prices = {key: value.replace('\n', '') for key, value in prices.items()}
 
-print(final_prices)
+
+html_content = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prices</title>
+</head>
+<body>
+    <ul>
+"""
+
+for store, price in final_prices.items():
+    html_content += f"        <li>{store}: {price}</li>\n"
+html_content += """
+    </ul>
+</body>
+</html>
+"""
+
+with open("prices.html", "w") as html_file:
+    html_file.write(html_content)
